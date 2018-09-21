@@ -23,7 +23,7 @@ def view_tasks(func):
         Get the tasks in the todo_list
     """
     def continue_func():
-        print("All the tasks")
+        print("-------  Tasks  -------")
         if not todo_list:
             print("There are currently no tasks")
             func()
@@ -36,7 +36,7 @@ def view_tasks(func):
 @view_tasks
 @retry
 def create_task():
-    task = input("enter task: ")
+    task = input("enter name task to add: ")
     if not task.isalpha():
         print("Please input proper name for task")
         return
@@ -59,6 +59,9 @@ def delete_task():
     """
     Removes the specified task from the todo_list
     """
+    if not todo_list:
+        print("They are currently no task to delete")
+        return
     task_number = input("enter task_number: ")
     if not task_number.isdigit():
         print("Please fill in correct number")
@@ -69,6 +72,7 @@ def delete_task():
         return
     deleted_task = todo_list.pop(task_number)
     print("{} has been deleted".format(deleted_task))
+    get_tasks()
     return
 
 
@@ -91,17 +95,13 @@ def mark_as_finished():
     if task is "This task number does not exist":
         print(task)
         return
-    not_finished = []
-    for item in list(todo_list.values()):
-        if '[finished]' not in item:
-            not_finished.append(item)
-    if todo_list[task_number] in not_finished:
-        finished_task = todo_list.pop(task_number) + ' ' + '[finished]'
-        todo_list[task_number] = finished_task
-        print("{} has been marked as Finished".format(todo_list[task_number].replace('[finished]', '')))
-        get_tasks()
+    if '[finished]' in task:
+        print("{} has already been marked as Finished".format(todo_list[task_number].replace('[finished]', '')))
         return
-    return "{} has already been marked as Finished".format(todo_list[task_number].replace('[finished]', ''))
+    todo_list[task_number] = task + '[finished]'
+    print("{} has been marked as Finished".format(todo_list[task_number].replace('[finished]', '')))
+    get_tasks()
+    return
 
 
 
@@ -124,7 +124,7 @@ def get_tasks():
     """
         Get the tasks in the todo_list
     """
-    print("All the tasks")
+    print("-------  Tasks  -------")
     if not todo_list:
         print("There are currently no tasks")
     for k, v in todo_list.items():
