@@ -27,6 +27,8 @@ def add_account(name, password):
     """
     Create New user with Name and Password
     """
+    if not all([name, password]):
+        return "Please fill missing fields"
     if name in list(accounts.values()):
         return "This name already exists"
     if password in accounts:
@@ -39,6 +41,8 @@ def login(name, password):
     """
     Login user with Name and Password if they map up the correct key value pair in accounts
     """
+    if not all([name, password]):
+        return "Please fill missing fields"
     if name not in accounts.values():
         return "Name does not exist"
     if password not in accounts:

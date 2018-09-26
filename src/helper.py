@@ -32,11 +32,13 @@ def select():
 
     if selection is '1':
         new_line()
-        create_task()
+        task = input("enter name task to add: ")
+        create_task(task)
         return select()
 
     elif selection is '2':
-        delete_task()
+        task_number = input("enter task_number: ")
+        delete_task(task_number)
         return select()
 
     elif selection is '3':
@@ -50,7 +52,8 @@ def select():
 def extra_ifs(selection):
     if selection is '4':
         new_line()
-        mark_as_finished()
+        task_number = input("enter task_number: ")
+        mark_as_finished(task_number)
         return select()
 
     elif selection is '5':

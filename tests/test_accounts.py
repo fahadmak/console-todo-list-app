@@ -40,7 +40,7 @@ class TestAccount(unittest.TestCase):
 
     def test_name_does_not_exist(self):
         login_user = login("emma", "geometric")
-        self.assertIn('Password does not exist', login_user)
+        self.assertIn('Name does not exist', login_user)
 
     def test_passwords_does_not_exist(self):
         login_user = login("eddy wizzy", "cruel")

@@ -1,13 +1,16 @@
 import unittest
-from src.tasks import create_task, delete_all_tasks, delete_task, mark_as_finished
+from src.tasks import create_task, delete_all_tasks, delete_task, mark_as_finished, todo_list
 
 
 class TestTasks(unittest.TestCase):
 
+    def setUp(self):
+        self.todo_list = todo_list
+
     # Tests for create task
     def test_create_task(self):
-        add_task = create_task()
-        self.assertIn("Brush your teeth has been added", add_task)
+        add_task = create_task("brush your teeth")
+        self.assertIn("brush your teeth has been added", add_task)
 
     def test_if_task_exists(self):
         add_task = create_task("Edinburgh")
@@ -15,12 +18,12 @@ class TestTasks(unittest.TestCase):
         self.assertIn('Edinburgh already exists in the Todo list', add_task)
 
     def test_if_task_integer(self):
-        add_task = create_task()
+        add_task = create_task('5')
         self.assertIn("Please input proper name for task", add_task)
 
     def test_if_task_empty(self):
         add_task = create_task("")
-        self.assertIn("Please fill missing fields", add_task)
+        self.assertIn('please input task', add_task)
 
     # Tests for delete task
 
@@ -42,11 +45,12 @@ class TestTasks(unittest.TestCase):
 
     def test_task_is_does_not_exist(self):
         marked = mark_as_finished("4")
-        self.assertIn('Todo List is empty', marked)
+        self.assertIn('This task number does not exist', marked)
 
     def test_delete_all_tasks(self):
-        create_task("Free")
-        create_task("style")
+        task1 = create_task("Free")
+        task2 = create_task("style")
+        self.todo_list = {task1, task2}
         del_tasks = delete_all_tasks()
         self.assertIn("All tasks successfully deleted", del_tasks)
 
